@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BLMS Student Commons</title>
   <link rel="icon" type="image/png" href="https://static.instructure.com/images/favicon.png" />
   <style>
@@ -38,6 +38,27 @@
       gap: 12px;
       padding: 20px;
       text-align: center;
+    }
+
+    .portal::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 200px;
+      border: 4px solid rgba(170, 0, 255, 0.4);
+      border-radius: 50%;
+      transform: rotateX(60deg) rotateZ(30deg);
+      animation: spinRing 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes spinRing {
+      from {
+        transform: rotateX(60deg) rotateZ(0deg);
+      }
+      to {
+        transform: rotateX(60deg) rotateZ(360deg);
+      }
     }
 
     .portal-title {
@@ -97,13 +118,12 @@
     function draw() {
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#aa00ff"; // purple binary
+      ctx.fillStyle = "#aa00ff";
       ctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < drops.length; i++) {
         const text = Math.random() > 0.5 ? "0" : "1";
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
