@@ -4,18 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BLMS Student Commons</title>
-  <link rel="icon" type="image/png" href="https://static.instructure.com/images/favicon.png" />
+  <link rel="icon" href="https://static.instructure.com/images/favicon.png" type="image/png" />
   <style>
     body {
       margin: 0;
+      font-family: monospace;
       background: radial-gradient(circle at center, #1a001a 0%, #000000 100%);
       overflow: hidden;
-      font-family: monospace;
     }
 
     canvas {
-      display: block;
       position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
       z-index: 0;
     }
 
@@ -23,76 +25,19 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
       width: 320px;
       height: 320px;
-    }
-
-    .ring, .ring2 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-style: preserve-3d;
-      transform: translate(-50%, -50%) rotateX(60deg);
-      border-radius: 50%;
-      animation: spinRing 20s linear infinite;
-      pointer-events: none;
-    }
-
-    .ring::before, .ring2::before {
-      content: "";
-      display: block;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
       transform: translate(-50%, -50%);
-    }
-
-    .ring {
-      width: 500px;
-      height: 180px;
-      z-index: 0;
-    }
-
-    .ring::before {
-      width: 500px;
-      height: 180px;
-      border: 3px solid rgba(170, 0, 255, 0.4);
-      box-shadow: 0 0 20px rgba(170, 0, 255, 0.5);
-    }
-
-    .ring2 {
-      width: 600px;
-      height: 220px;
-      animation-duration: 30s;
-      z-index: 0;
-    }
-
-    .ring2::before {
-      width: 600px;
-      height: 220px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-
-    @keyframes spinRing {
-      from {
-        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
-      }
-      to {
-        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg);
-      }
+      z-index: 2;
     }
 
     .portal {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       width: 320px;
       height: 320px;
+      transform: translate(-50%, -50%);
       border-radius: 50%;
       background: radial-gradient(circle, #aa00ff 0%, #220066 70%, transparent 100%);
       box-shadow: 0 0 40px 20px #aa00ff, inset 0 0 40px 10px #220066;
@@ -104,21 +49,20 @@
       gap: 12px;
       padding: 20px;
       text-align: center;
-      z-index: 1;
+      z-index: 2;
     }
 
     .portal-title {
-      color: #ffffff;
+      color: white;
       font-size: 20px;
       font-weight: bold;
-      margin-bottom: 10px;
       text-shadow: 0 0 10px #aa00ff;
     }
 
     .nav-button {
-      background-color: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.6);
       border: 1px solid #aa00ff;
-      color: #ffffff;
+      color: white;
       padding: 10px 20px;
       border-radius: 8px;
       text-decoration: none;
@@ -127,9 +71,55 @@
     }
 
     .nav-button:hover {
-      background-color: #bb33ff;
+      background: #bb33ff;
       transform: scale(1.1);
       box-shadow: 0 0 10px #bb33ff;
+    }
+
+    .ring, .ring2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) rotateX(60deg);
+      border-radius: 50%;
+      animation: spinRing 20s linear infinite, flashRing 2s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .ring::before, .ring2::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+
+    .ring {
+      width: 700px;
+      height: 280px;
+    }
+
+    .ring::before {
+      width: 700px;
+      height: 280px;
+      border: 4px solid rgba(255, 0, 255, 0.7);
+      box-shadow: 0 0 50px rgba(255, 0, 255, 0.9), 0 0 80px rgba(255, 0, 255, 0.5);
+    }
+
+    .ring2 {
+      width: 800px;
+      height: 320px;
+      animation-duration: 30s;
+    }
+
+    .ring2::before {
+      width: 800px;
+      height: 320px;
+      border: 3px dashed rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
     }
 
     @keyframes pulse {
@@ -140,6 +130,24 @@
         transform: translate(-50%, -50%) scale(1.1);
       }
     }
+
+    @keyframes spinRing {
+      from {
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg);
+      }
+    }
+
+    @keyframes flashRing {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -147,10 +155,10 @@
     <div class="ring"></div>
     <div class="ring2"></div>
     <div class="portal">
-      <div class="portal-title">Magic🔮</div>
+      <div class="portal-title">Magic</div>
       <a href="https://www.google.com" class="nav-button" target="_blank">Google</a>
       <a href="https://www.youtube.com" class="nav-button" target="_blank">YouTube</a>
-      <a href="https:canvas-login-instructure.github.io" class="nav-button" target="_blank">GitHub</a>
+      <a href="https://www.github.com" class="nav-button" target="_blank">GitHub</a>
       <a href="https://iamsteve.raspberryip.com/" class="nav-button" target="_blank">Canvas</a>
     </div>
   </div>
@@ -176,6 +184,7 @@
       for (let i = 0; i < drops.length; i++) {
         const text = Math.random() > 0.5 ? "0" : "1";
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
         if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
