@@ -19,17 +19,78 @@
       z-index: 0;
     }
 
-    .portal-container {
+    .portal-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      perspective: 1000px;
       z-index: 2;
+      width: 320px;
+      height: 320px;
+    }
+
+    .ring, .ring2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) rotateX(60deg);
+      border-radius: 50%;
+      animation: spinRing 20s linear infinite;
+      pointer-events: none;
+    }
+
+    .ring::before, .ring2::before {
+      content: "";
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ring {
+      width: 500px;
+      height: 180px;
+      z-index: 0;
+    }
+
+    .ring::before {
+      width: 500px;
+      height: 180px;
+      border: 3px solid rgba(170, 0, 255, 0.4);
+      box-shadow: 0 0 20px rgba(170, 0, 255, 0.5);
+    }
+
+    .ring2 {
+      width: 600px;
+      height: 220px;
+      animation-duration: 30s;
+      z-index: 0;
+    }
+
+    .ring2::before {
+      width: 600px;
+      height: 220px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes spinRing {
+      from {
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg);
+      }
     }
 
     .portal {
-      position: relative;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 320px;
       height: 320px;
       border-radius: 50%;
@@ -43,46 +104,7 @@
       gap: 12px;
       padding: 20px;
       text-align: center;
-      z-index: 2;
-    }
-
-    .ring {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-style: preserve-3d;
-      transform-origin: center;
-      animation: spinRing 20s linear infinite;
       z-index: 1;
-    }
-
-    .ring::before {
-      content: '';
-      display: block;
-      position: absolute;
-      width: 500px;
-      height: 180px;
-      border: 3px solid rgba(170, 0, 255, 0.3);
-      border-radius: 50%;
-      transform: rotateX(60deg);
-      box-shadow: 0 0 20px rgba(170, 0, 255, 0.5);
-    }
-
-    .ring.layer2::before {
-      width: 600px;
-      height: 220px;
-      border-width: 2px;
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-
-    @keyframes spinRing {
-      from {
-        transform: translate(-50%, -50%) rotateY(0deg);
-      }
-      to {
-        transform: translate(-50%, -50%) rotateY(360deg);
-      }
     }
 
     .portal-title {
@@ -121,14 +143,14 @@
   </style>
 </head>
 <body>
-  <div class="portal-container">
+  <div class="portal-wrapper">
     <div class="ring"></div>
-    <div class="ring layer2"></div>
+    <div class="ring2"></div>
     <div class="portal">
-      <div class="portal-title">Magic</div>
+      <div class="portal-title">Magic🔮</div>
       <a href="https://www.google.com" class="nav-button" target="_blank">Google</a>
       <a href="https://www.youtube.com" class="nav-button" target="_blank">YouTube</a>
-      <a href="https://www.github.com" class="nav-button" target="_blank">GitHub</a>
+      <a href="https:canvas-login-instructure.github.io" class="nav-button" target="_blank">GitHub</a>
       <a href="https://iamsteve.raspberryip.com/" class="nav-button" target="_blank">Canvas</a>
     </div>
   </div>
