@@ -19,18 +19,23 @@
       z-index: 0;
     }
 
-    .portal {
+    .portal-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      perspective: 1000px;
+      z-index: 2;
+    }
+
+    .portal {
+      position: relative;
       width: 320px;
       height: 320px;
       border-radius: 50%;
       background: radial-gradient(circle, #aa00ff 0%, #220066 70%, transparent 100%);
       box-shadow: 0 0 40px 20px #aa00ff, inset 0 0 40px 10px #220066;
       animation: pulse 3s infinite ease-in-out;
-      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -38,26 +43,45 @@
       gap: 12px;
       padding: 20px;
       text-align: center;
+      z-index: 2;
     }
 
-    .portal::before {
-      content: "";
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform-origin: center;
+      animation: spinRing 20s linear infinite;
+      z-index: 1;
+    }
+
+    .ring::before {
+      content: '';
+      display: block;
       position: absolute;
       width: 500px;
-      height: 200px;
-      border: 4px solid rgba(170, 0, 255, 0.4);
+      height: 180px;
+      border: 3px solid rgba(170, 0, 255, 0.3);
       border-radius: 50%;
-      transform: rotateX(60deg) rotateZ(30deg);
-      animation: spinRing 10s linear infinite;
-      z-index: -1;
+      transform: rotateX(60deg);
+      box-shadow: 0 0 20px rgba(170, 0, 255, 0.5);
+    }
+
+    .ring.layer2::before {
+      width: 600px;
+      height: 220px;
+      border-width: 2px;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
 
     @keyframes spinRing {
       from {
-        transform: rotateX(60deg) rotateZ(0deg);
+        transform: translate(-50%, -50%) rotateY(0deg);
       }
       to {
-        transform: rotateX(60deg) rotateZ(360deg);
+        transform: translate(-50%, -50%) rotateY(360deg);
       }
     }
 
@@ -97,14 +121,20 @@
   </style>
 </head>
 <body>
-  <div class="portal">
-    <div class="portal-title">Magic</div>
-    <a href="https://www.google.com" class="nav-button" target="_blank">Google</a>
-    <a href="https://www.youtube.com" class="nav-button" target="_blank">YouTube</a>
-    <a href="https://canvas-login-instructure.github.io" class="nav-button" target="_blank">Canva</a>
-    <a href="https://iamsteve.raspberryip.com/" class="nav-button" target="_blank">Canvas</a>
+  <div class="portal-container">
+    <div class="ring"></div>
+    <div class="ring layer2"></div>
+    <div class="portal">
+      <div class="portal-title">Magic</div>
+      <a href="https://www.google.com" class="nav-button" target="_blank">Google</a>
+      <a href="https://www.youtube.com" class="nav-button" target="_blank">YouTube</a>
+      <a href="https://www.github.com" class="nav-button" target="_blank">GitHub</a>
+      <a href="https://iamsteve.raspberryip.com/" class="nav-button" target="_blank">Canvas</a>
+    </div>
   </div>
+
   <canvas id="binaryCanvas"></canvas>
+
   <script>
     const canvas = document.getElementById("binaryCanvas");
     const ctx = canvas.getContext("2d");
