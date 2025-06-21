@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLMS Student Commons</title>
+  <link rel="icon" type="image/png" href="https://static.instructure.com/images/favicon.png" />
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #1a001a 0%, #000000 100%);
+      overflow: hidden;
+      font-family: monospace;
+    }
+
+    canvas {
+      display: block;
+      position: absolute;
+      z-index: 0;
+    }
+
+    .portal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #aa00ff 0%, #220066 70%, transparent 100%);
+      box-shadow: 0 0 40px 20px #aa00ff, inset 0 0 40px 10px #220066;
+      animation: pulse 3s infinite ease-in-out;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .portal-title {
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px #aa00ff;
+    }
+
+    .nav-button {
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid #aa00ff;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+
+    .nav-button:hover {
+      background-color: #bb33ff;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #bb33ff;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal">
+    <div class="portal-title">Magic</div>
+    <a href="https://www.google.com" class="nav-button" target="_blank">Google</a>
+    <a href="https://www.youtube.com" class="nav-button" target="_blank">YouTube</a>
+    <a href="https://www.github.com" class="nav-button" target="_blank">GitHub</a>
+    <a href="https://iamsteve.raspberryip.com/" class="nav-button" target="_blank">Canvas</a>
+  </div>
+  <canvas id="binaryCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById("binaryCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#aa00ff"; // purple binary
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = Math.random() > 0.5 ? "0" : "1";
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
